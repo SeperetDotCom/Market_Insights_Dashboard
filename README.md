@@ -18,7 +18,7 @@
 - Fetch live stock data via Yahoo Finance
 - Interactive candlestick charts (Plotly)
 - Toggle overlays like:
-  - 20-day Moving Average
+  - 20-day MA (Moving Average)
   - RSI (Relative Strength Index)
 - Sidebar input for custom ticker, timeframe, and interval
 - Drag/drop-ready preset support (coming soon)
@@ -30,11 +30,16 @@
 ### 1. Clone the Repo or Download ZIP
 
 ```
-git clone https://github.com/yourusername/SeperetPulse.git
+git clone https://github.com/denv3rr/SeperetPulse.git
 cd SeperetPulse
 ```
 
 ### 2. Install Requirements
+
+- streamlit
+- yfinance
+- plotly
+- pandas
 
 ```
 pip install -r requirements.txt
