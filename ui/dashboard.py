@@ -5,6 +5,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import streamlit as st
 import plotly.graph_objs as go
 import pandas as pd
+from core.api import fetch_tickers
 from core.fetch_data import get_stock_data
 from core.analysis import moving_average, relative_strength_index
 
@@ -25,15 +26,14 @@ st.markdown("""
 
 st.title("Market Dashboard by seperet.com")
 
-# ---- SAMPLE TICKER DATA (Will replace Later with API) ----
+# ---- TICKER DATA ----
+all_tickers = fetch_tickers("US", "TO", "CN")  # Add global exchanges if needed...
+
 ticker_data = {
-    "AAPL": {"name": "Apple Inc.", "exchange": "NASDAQ"},
-    "MSFT": {"name": "Microsoft Corp.", "exchange": "NASDAQ"},
-    "GOOGL": {"name": "Alphabet Inc.", "exchange": "NASDAQ"},
-    "TSLA": {"name": "Tesla Inc.", "exchange": "NASDAQ"},
-    "JNJ": {"name": "Johnson & Johnson", "exchange": "NYSE"},
-    "BAC": {"name": "Bank of America", "exchange": "NYSE"},
-    "BRK-B": {"name": "Berkshire Hathaway", "exchange": "NYSE"},
+    item["symbol"]: {
+        "name": item["name"],
+        "exchange": item["exchange"]
+    } for item in all_tickers
 }
 
 # ---- SIDEBAR CONTROLS ----
