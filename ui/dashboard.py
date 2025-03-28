@@ -5,10 +5,13 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import streamlit as st
 import plotly.graph_objs as go
 import pandas as pd
+
 from core.api import fetch_tickers
+from core.api import fetch_tickers_cached
 from core.fetch_data import get_stock_data
+
 from core.presets import load_presets
-from core.indicators import get_indicator  # ✅ Plugin-style indicator support
+from core.indicators import get_indicator  # For later plugin-style indicator support
 
 # Load strategy presets
 presets = load_presets()
@@ -34,8 +37,14 @@ st.markdown("""
 st.title("Market Dashboard by seperet.com")
 
 # ---- TICKER DATA ----
-regions_to_load = ["US", "TO", "CN", "HK", "LSE"]  # Add/remove global exchanges if needed...
-all_ticker_list = fetch_tickers(regions_to_load)
+regions_to_load = ["US", "TO", "CN", "HK", "LSE"]  # Add/remove global exchanges as needed
+regions_key = ",".join(regions_to_load)
+
+# Optional refresh
+if st.sidebar.button("🔄 Refresh Ticker List"):
+    fetch_tickers_cached.cache_clear()
+
+all_ticker_list = fetch_tickers_cached(regions_key)
 
 # Build dictionary for dropdown and filtering
 ticker_data = {
