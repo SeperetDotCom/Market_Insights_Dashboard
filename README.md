@@ -8,6 +8,7 @@
 
 - A lightweight, open-source market analysis dashboard designed for traders, analysts, and researchers.
 - Fetches live market data and displays interactive charts with technical indicators.
+
 <br></br>
 <br></br>
 
@@ -15,7 +16,7 @@
 
 ## Features
 
-- Fetch live stock data via Yahoo Finance
+- Fetch live stock data via Yahoo Finance and Finnhub.io
 - Interactive candlestick charts (Plotly)
 - Toggle overlays like:
   - 20-day MA (Moving Average)
@@ -29,28 +30,46 @@
 
 ### 1. Clone the Repo or Download ZIP
 
-```
+```bash
 git clone https://github.com/denv3rr/SeperetPulse.git
 cd SeperetPulse
 ```
 
 ### 2. Install Requirements
 
-- streamlit
-- yfinance
-- plotly
-- pandas
+- streamlit  
+- yfinance  
+- plotly  
+- pandas  
+- requests (for Finnhub API)
 
-```
+```bash
 pip install -r requirements.txt
 ```
 
-### 3. Launch UI Dashboard
+### 3. Set Up Finnhub.io API Key
 
-- ```
-  streamlit run ui/dashboard.py
-  ```
-- Or double-click run_dashboard.bat (Windows only).
+To use stock symbol data from [Finnhub](https://finnhub.io):
+
+1. Create a free account at: [https://finnhub.io/register](https://finnhub.io/register)
+2. Go to your [API dashboard](https://finnhub.io/dashboard) to get your token.
+3. Add this token to your environment variables or `.env` file:
+    ```bash
+    export FINNHUB_API_KEY=your_api_key_here
+    ```
+4. Alternatively, update the key directly in `core/api.py` if needed.
+
+> ⚠️ **Note:** Some international exchanges require a paid plan with Finnhub.
+
+### 4. Launch UI Dashboard
+
+```bash
+streamlit run ui/dashboard.py
+```
+
+Or double-click `run_dashboard.bat` (Windows only).
+
+---
 
 ## Roadmap
 
@@ -60,9 +79,22 @@ pip install -r requirements.txt
 - Real-time data streaming (WebSockets)
 - Modular quant strategy plugin system
 
-[COMMENT]: <LOGO*****************************************>
+---
+
+## Reminders / To-Do
+
+- ⏳ Tab auto-close timeout if no confirmation
+- ⏳ Transition/fade animations
+- ⏳ Tab reordering support
+- ⏳ Dark/light mode toggle
+- ⏳ Sidebar hover & dropdown styling polish
+- ⏳ Improve tab confirmation UX (click-away, no flicker)
+- ⏳ Optional logging/export feature (CSV or JSON)
+
+---
+
 <div align="center">
   <a href="https://seperet.com">
-    <img src=https://github.com/denv3rr/denv3rr/blob/main/Seperet_Slam_White.gif/>
+    <img src="https://github.com/denv3rr/denv3rr/blob/main/Seperet_Slam_White.gif"/>
   </a>
 </div>
