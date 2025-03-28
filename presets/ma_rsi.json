@@ -1,0 +1,9 @@
+{
+    "name": "MA + RSI",
+    "description": "Shows 20-day moving average and RSI by default.",
+    "indicators": {
+        "ma_20": true,
+        "rsi": true,
+        "bollinger": false
+    }
+}

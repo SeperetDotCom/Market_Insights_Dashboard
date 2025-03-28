@@ -7,7 +7,14 @@ import plotly.graph_objs as go
 import pandas as pd
 from core.api import fetch_tickers
 from core.fetch_data import get_stock_data
-from core.analysis import moving_average, relative_strength_index
+from core.presets import load_presets
+from core.indicators import get_indicator  # ✅ Plugin-style indicator support
+
+# Load strategy presets
+presets = load_presets()
+preset_names = list(presets.keys())
+selected_preset = st.sidebar.selectbox("Strategy Preset", preset_names)
+active_indicators = presets[selected_preset]["indicators"]
 
 # ---- PAGE CONFIG ----
 st.set_page_config(
@@ -27,13 +34,17 @@ st.markdown("""
 st.title("Market Dashboard by seperet.com")
 
 # ---- TICKER DATA ----
-all_tickers = fetch_tickers("US", "TO", "CN")  # Add global exchanges if needed...
+regions_to_load = ["US", "TO", "CN", "HK", "LSE"]  # Add/remove global exchanges if needed...
+all_ticker_list = fetch_tickers(regions_to_load)
 
+# Build dictionary for dropdown and filtering
 ticker_data = {
     item["symbol"]: {
         "name": item["name"],
         "exchange": item["exchange"]
-    } for item in all_tickers
+    }
+    for item in all_ticker_list
+    if item["symbol"] and item["name"] and item["exchange"]
 }
 
 # ---- SIDEBAR CONTROLS ----
@@ -98,11 +109,13 @@ if selected_tickers:
             ))
 
             # --- Moving Average (default show) ---
-            ma = moving_average(df)
-            if isinstance(ma, pd.Series) and not ma.isna().all():
-                hide_ma = st.toggle(f"Hide 20-day MA", value=False, key=f"hide_ma_{ticker}")
-                if not hide_ma:
-                    fig.add_trace(go.Scatter(x=df["Date"], y=ma, mode="lines", name="20-day MA"))
+            if active_indicators.get("ma_20", False):
+                ma_func = get_indicator("ma_20")
+                ma = ma_func(df) if ma_func else pd.Series()
+                if isinstance(ma, pd.Series) and not ma.isna().all():
+                    hide_ma = st.toggle(f"Hide 20-day MA", value=False, key=f"hide_ma_{ticker}")
+                    if not hide_ma:
+                        fig.add_trace(go.Scatter(x=df["Date"], y=ma, mode="lines", name="20-day MA"))
 
             # --- Render Main Chart ---
             fig.update_layout(
@@ -112,11 +125,13 @@ if selected_tickers:
             st.plotly_chart(fig, use_container_width=True)
 
             # --- RSI (default show) ---
-            rsi = relative_strength_index(df)
-            if isinstance(rsi, pd.Series) and not rsi.isna().all():
-                hide_rsi = st.toggle(f"Hide RSI", value=False, key=f"hide_rsi_{ticker}")
-                if not hide_rsi:
-                    st.line_chart(rsi, height=150)
+            if active_indicators.get("rsi", False):
+                rsi_func = get_indicator("rsi")
+                rsi = rsi_func(df) if rsi_func else pd.Series()
+                if isinstance(rsi, pd.Series) and not rsi.isna().all():
+                    hide_rsi = st.toggle(f"Hide RSI", value=False, key=f"hide_rsi_{ticker}")
+                    if not hide_rsi:
+                        st.line_chart(rsi, height=150)
 
 else:
     st.info("Please select at least one ticker to begin.")
