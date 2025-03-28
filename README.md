@@ -26,7 +26,7 @@
 
 ---
 
-## Quick Start
+## Usage
 
 ### 1. Clone the Repo or Download ZIP
 
@@ -40,7 +40,8 @@ cd SeperetPulse
 - streamlit  
 - yfinance  
 - plotly  
-- pandas  
+- pandas
+- python-dotenv  
 - requests (for Finnhub API)
 
 ```bash
