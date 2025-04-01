@@ -31,7 +31,7 @@
 ### 1. Clone the Repo or Download ZIP
 
 ```bash
-git clone https://github.com/denv3rr/SeperetPulse.git
+git clone https://github.com/denv3rr/Market_Insights_Dashboard.git
 cd SeperetPulse
 ```
 
