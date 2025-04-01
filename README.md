@@ -64,11 +64,19 @@ To use stock symbol data from [Finnhub](https://finnhub.io):
 
 ### 4. Launch UI Dashboard
 
-```bash
-streamlit run ui/dashboard.py
-```
+- ```bash
+  python app.py
+  ```
 
-Or double-click `run_dashboard.bat` (Windows only).
+or
+
+- ```bash
+  streamlit run ui/dashboard.py
+  ```
+
+Or
+
+- double-click `run_dashboard.bat` (Windows only).
 
 ---
 
