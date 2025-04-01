@@ -53,12 +53,16 @@ pip install -r requirements.txt
 To use stock symbol data from [Finnhub](https://finnhub.io):
 
 1. Create a free account at: [https://finnhub.io/register](https://finnhub.io/register)
+   
 2. Go to your [API dashboard](https://finnhub.io/dashboard) to get your token.
-3. Add this token to your environment variables or `.env` file:
+   
+3. Add this token to your environment variables or `.env` file (recommended - API keys will not be commited from this file):
+   
     ```bash
     export FINNHUB_API_KEY=your_api_key_here
     ```
-4. Alternatively, update the key directly in `core/api.py` if needed.
+    
+4. Alternatively, update the key directly in `core/api.py` if needed (not recommended - this file is not added to `.gitignore`).
 
 > ⚠️ **Note:** Some international exchanges require a paid plan with Finnhub.
 
