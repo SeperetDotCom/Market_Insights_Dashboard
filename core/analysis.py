@@ -1,3 +1,11 @@
+# Analytical formulas
+
+# ------------------------
+
+# Current:
+# - MA
+# - RA
+
 import pandas as pd
 
 def moving_average(data, window=20):
